@@ -25,6 +25,37 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 
+const mysql = require('mysql');
+const connection = mysql.createConnection({
+	host: 'localhost',
+	user: 'hoge',
+	password: 'hogehoge',
+	database: 'node_test'
+});
+
+connection.connect(function(err) {
+	if (err) {
+		console.error(`error connecting: ${err.stack}`);
+		return;
+	}
+	console.log(`connected as id : ${connection.threadId}`);
+});
+
+// connection.query('insert into user set ?', {name: 'ore', birth: '2017/4/17'}, function(error, results, fields) {
+// 	if (error) throw error;
+// 	console.log(results.insertId);
+// })
+connection.query('select * from user;', function(err, results, filelds) {
+	console.log(results);
+})
+
+connection.end();
+
+
+
+
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
