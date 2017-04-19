@@ -47,9 +47,7 @@ router.post('/create', function(req, res, next) {
 		console.log(`connected as id : ${connection.threadId}`);
 	});
 
-	console.log(`res: ${res.body}`);
-
-	connection.query('insert into user ?', {name: res.name, birth: '2017-4-4'}, function(err, results, filelds) {
+	connection.query('insert into user set ?', {name: req.body.name, birth: '2017-4-4'}, function(err, results, filelds) {
 		console.log(`error: ${err}`);
 		console.log(results);
 		res.redirect(302, '/users');
